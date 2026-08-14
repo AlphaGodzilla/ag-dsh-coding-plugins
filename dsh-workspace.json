@@ -1,0 +1,8 @@
+{
+  "name": "ag-dsh-coding-plugins",
+  "description": "DeepSeek Harness (DSH) coding-plugins monorepo",
+  "npmScope": "@ag-dsh",
+  "node": ">=22",
+  "pnpm": "10.15.1",
+  "repository": "https://github.com/AlphaGodzilla/ag-dsh-coding-plugins.git"
+}

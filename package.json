@@ -1,0 +1,39 @@
+{
+  "name": "ag-dsh-coding-plugins",
+  "description": "DeepSeek Harness (DSH) coding-plugins monorepo: independent TypeScript plugin packages under packages/, CI/CD machinery at the root",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.15.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "typecheck": "tsc -b --pretty false && tsc -p tsconfig.scripts.json --pretty false",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "clean": "tsx scripts/clean.mts",
+    "new": "tsx scripts/scaffold.mts",
+    "check-workspace": "tsx scripts/check-workspace.mts",
+    "pack-check": "tsx scripts/pack-check.mts",
+    "hygiene": "pnpm run check-workspace && pnpm run pack-check",
+    "check:ci": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run build && pnpm run hygiene",
+    "changeset": "changeset",
+    "version:packages": "changeset version",
+    "release": "pnpm run build && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "catalog:",
+    "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "oxlint": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

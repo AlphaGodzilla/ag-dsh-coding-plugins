@@ -1,0 +1,20 @@
+packages:
+  - packages/*
+
+# pnpm 10 blocks dependency postinstall scripts by default; esbuild's script
+# is required by vite/vitest.
+onlyBuiltDependencies:
+  - esbuild
+
+# Shared dependency versions for every workspace package (pnpm catalogs).
+# Packages reference these with the `catalog:` protocol, e.g. "typescript": "catalog:".
+catalog:
+  typescript: ^5.9.0
+  vitest: ^4.1.0
+  '@vitest/coverage-v8': ^4.1.0
+  oxlint: ^1.78.0
+  tsx: ^4.23.0
+  '@types/node': ^22.10.0
+  '@deepseek-ai/cordis': ^4.0.1
+  '@deepseek-ai/schemastery': ^3.18.1
+  '@changesets/cli': ^3.0.0
