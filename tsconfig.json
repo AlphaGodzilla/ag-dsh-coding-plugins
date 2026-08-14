@@ -2,7 +2,7 @@
   "files": [],
   "references": [
     {
-      "path": "./packages/hello-world"
+      "path": "./packages/gen-commit-msg-zh"
     }
   ]
 }

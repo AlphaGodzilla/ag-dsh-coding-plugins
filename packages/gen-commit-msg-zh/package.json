@@ -1,0 +1,52 @@
+{
+  "name": "@ag-dsh/dsh-gen-commit-msg-zh",
+  "description": "DSH 插件: 生成中文 git commit message 并交互提交 (迁移自 Pi Agent 扩展)",
+  "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlphaGodzilla/ag-dsh-coding-plugins.git",
+    "directory": "packages/gen-commit-msg-zh"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "prompts"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "catalog:",
+    "@deepseek-ai/dsh-agent": "catalog:",
+    "@deepseek-ai/dsh-commands": "catalog:",
+    "@deepseek-ai/dsh-llm": "catalog:",
+    "@deepseek-ai/dsh-skill": "catalog:",
+    "@deepseek-ai/dsh-user-questions": "catalog:"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "catalog:",
+    "@deepseek-ai/dsh-agent": "catalog:",
+    "@deepseek-ai/dsh-commands": "catalog:",
+    "@deepseek-ai/dsh-llm": "catalog:",
+    "@deepseek-ai/dsh-skill": "catalog:",
+    "@deepseek-ai/dsh-user-questions": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

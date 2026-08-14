@@ -14,7 +14,10 @@ const errors: string[] = []
 const requiredEntries = ['package.json', 'README.md', 'lib/index.js', 'lib/index.d.ts']
 let checked = 0
 
-for (const dir of readdirSync(packagesDir).toSorted()) {
+for (const dir of readdirSync(packagesDir, { withFileTypes: true })
+  .filter((entry) => entry.isDirectory() && !entry.name.startsWith('.'))
+  .map((entry) => entry.name)
+  .toSorted()) {
   const pkgDir = join(packagesDir, dir)
   const pkg = JSON.parse(readFileSync(join(pkgDir, 'package.json'), 'utf8')) as { private?: boolean }
   if (pkg.private) continue

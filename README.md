@@ -10,10 +10,10 @@
 .
 ├── AGENTS.md                    # 智能体操作守则（开发约定）
 ├── packages/                    # 插件集合：每个目录一个独立插件项目
-│   └── hello-world/             #   参考插件（规范形状 + CI 夹具）
-│       ├── src/index.ts         #   name / Config / apply 命名导出
+│   └── gen-commit-msg-zh/       #   示例插件：生成中文 commit message 并交互提交
+│       ├── src/index.ts         #   name / inject / apply 命名导出
 │       ├── tests/index.spec.ts  #   vitest 单测
-│       ├── README.md            #   包契约（配置表、行为、限制）
+│       ├── README.md            #   包契约（行为、依赖服务、限制）
 │       ├── package.json         #   可发布 npm 包
 │       └── tsconfig.json
 ├── scripts/                     # 外层 CI/CD 脚本（tsx 运行）
@@ -36,7 +36,7 @@
 ```sh
 pnpm install        # 安装依赖（pnpm >= 10）
 pnpm check:ci       # 全部门禁：typecheck → lint → test → build → workspace/pack 校验
-pnpm new my-tool    # 生成一个新插件包（或参考 packages/hello-world 手写）
+pnpm new my-tool    # 生成一个新插件包（或参考 packages/gen-commit-msg-zh 手写）
 ```
 
 ## 工具链
