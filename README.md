@@ -9,6 +9,8 @@
 ## 插件演示
 https://github.com/user-attachments/assets/34af50d9-f270-4170-b6db-d4290d524b89
 
+https://github.com/user-attachments/assets/5bc60971-48f8-41a4-ad98-53e3a1b6d67f
+
 ## 插件列表
 
 > 每新增一个插件，请同步更新本表。
