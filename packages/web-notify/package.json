@@ -1,7 +1,7 @@
 {
   "name": "@ag-dsh/dsh-web-notify",
   "description": "DSH web 通知提醒插件：对话完成/需要回答/需要授权/出错时通过浏览器系统通知提醒（Chrome/Edge/Firefox/Safari）",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publishConfig": {
     "access": "public"
   },
