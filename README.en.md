@@ -6,6 +6,11 @@ A collection of [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harne
 
 Development conventions and agent operating rules: see [AGENTS.md](AGENTS.md).
 
+## Demonstration
+https://github.com/user-attachments/assets/34af50d9-f270-4170-b6db-d4290d524b89
+
+https://github.com/user-attachments/assets/5bc60971-48f8-41a4-ad98-53e3a1b6d67f
+
 ## Plugins
 
 > Keep this table in sync when adding a plugin.
