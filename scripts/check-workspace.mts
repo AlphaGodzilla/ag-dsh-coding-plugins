@@ -98,7 +98,8 @@ for (const dir of packageDirs) {
   check(pkg.repository?.directory === `packages/${dir}`, `packages/${dir}: repository.directory must be "packages/${dir}"`)
 
   check(existsSync(join(pkgDir, 'src/index.ts')), `packages/${dir}: src/index.ts is missing`)
-  check(existsSync(join(pkgDir, 'README.md')), `packages/${dir}: README.md is missing`)
+  check(existsSync(join(pkgDir, 'README.md')), `packages/${dir}: README.md (Chinese, default) is missing`)
+  check(existsSync(join(pkgDir, 'README.en.md')), `packages/${dir}: README.en.md (English) is missing`)
   check(existsSync(join(pkgDir, 'tsconfig.json')), `packages/${dir}: tsconfig.json is missing`)
   const testsDir = join(pkgDir, 'tests')
   if (!existsSync(testsDir)) {

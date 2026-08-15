@@ -275,7 +275,7 @@ describe('apply 挂接 (真实 cordis 上下文)', () => {
     await fiber.dispose()
   })
 
-  it('注册 git-commit-zh 技能: 模型可调用、用户不可调用、名称与命令不同', async () => {
+  it('注册 git-commit-zh 技能: 模型与用户均可调用、名称与命令不同', async () => {
     const ctx = new Context()
     const registeredSkills: SkillRegistration[] = []
     ctx.provide('commands', {
@@ -298,7 +298,7 @@ describe('apply 挂接 (真实 cordis 上下文)', () => {
     expect(skill?.description.length).toBeGreaterThan(0)
     expect(skill?.whenToUse).toBeDefined()
     expect(skill?.content).toBe(GIT_COMMIT_SKILL)
-    expect(skill?.invocation).toEqual({ modelInvocable: true, userInvocable: false })
+    expect(skill?.invocation).toEqual({ modelInvocable: true, userInvocable: true })
     expect(skill?.source).toBe('custom')
 
     await fiber.dispose()

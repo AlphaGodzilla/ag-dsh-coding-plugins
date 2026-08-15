@@ -2,81 +2,69 @@
 
 # @ag-dsh/dsh-gen-commit-msg-zh
 
-DSH 插件: 生成中文 git commit message 并交互提交。迁移自 Pi Coding Agent 扩展
-`pi/agent/extensions/gen-commit-msg-zh`，命令名保持 `/gen-commit-msg-zh`，支持携带附加提示词运行。
+DSH plugin: generate a Chinese git commit message and commit interactively. Migrated from the Pi Coding Agent extension `pi/agent/extensions/gen-commit-msg-zh`; the command name stays `/gen-commit-msg-zh` and it accepts an optional extra prompt.
 
 ## Installation
 
-在 DSH profile 目录中：
+In a DSH profile directory:
 
 ```sh
 dsh plugin --profile <name> add @ag-dsh/dsh-gen-commit-msg-zh
 ```
 
-或写入 profile 的 `cordis.yml` / `cordis.patch.yml`：
+or add to the profile's `cordis.yml` / `cordis.patch.yml`:
 
 ```yaml
 - name: '@ag-dsh/dsh-gen-commit-msg-zh'
 ```
 
-依赖的宿主服务：
+Host services required:
 
-| 服务 | 依赖方式 | 说明 |
+| Service | Dependency | Description |
 |---|---|---|
-| `commands` | inject（硬依赖） | 注册 `/gen-commit-msg-zh` 命令 |
-| `skills` | `ctx.inject`（可选） | 注册 `git-commit-zh` 技能（非交互直接提交）；缺失时命令部分不受影响 |
-| `userQuestions` | `ctx.get`（可选） | 三选 / 调整输入对话框；缺失时命令仍可用，但不会弹菜单（需要带 UI 的部署，如 `@deepseek-ai/dsh-tool-ask-user` + 客户端 UI） |
+| `commands` | inject (hard) | Registers the `/gen-commit-msg-zh` command |
+| `skills` | `ctx.inject` (optional) | Registers the `git-commit-zh` skill (non-interactive direct commit); the command keeps working when absent |
+| `userQuestions` | `ctx.get` (optional) | Three-choice / adjustment input dialogs; the command still runs without it but shows no menu (needs a UI-backed deployment, e.g. `@deepseek-ai/dsh-tool-ask-user` + client UI) |
 
 ## Usage
 
-### 交互式命令
+### Interactive command
 
 ```
 /gen-commit-msg-zh [附加要求]
 ```
 
-交互流程：
+Interactive flow:
 
-1. **生成轮** —— 插件把生成提示词（模板 + 可选附加要求）作为消息发给模型并触发一轮。
-   模型自行运行 git 只读命令（`git status` / `git diff --staged` / `git branch --show-current` /
-   `git log --oneline -10`）获取上下文，生成并展示中文 commit message。
-   **本轮不做任何 git 写操作。**
-2. **三选** —— 生成回合结束后弹出原生对话框：
-   - **A) 提交** —— 插件跟进提交指令：模型先判断是否已有暂存改动，无则 `git add -A` 后提交，
-     有则直接提交（`git commit` 用多个 `-m`：首个为标题，其余为正文）。
-   - **B) 调整消息** —— 输入新的提示词，重新生成并再次三选（可循环）。
-   - **C) 放弃** —— 不做任何提交。
-3. **收尾** —— 提交轮结束后复位状态，不再次弹交互；结果可见于转录。
+1. **Generation turn** — the plugin sends the generation prompt (template + optional extra prompt) to the model and triggers a turn. The model runs read-only git commands (`git status` / `git diff --staged` / `git branch --show-current` / `git log --oneline -10`) to gather context, then generates and displays a Chinese commit message. **No git write command runs in this turn.**
+2. **Three choices** — after the generation turn ends, a native dialog appears:
+   - **A) Commit** — the plugin follows up with the commit instructions: the model first checks whether anything is staged; if not, `git add -A` then commit; otherwise commit the staged content directly (`git commit` with multiple `-m`: first as title, the rest as body).
+   - **B) Adjust message** — enter a new prompt, regenerate, and get the three choices again (loops).
+   - **C) Abandon** — no commit at all.
+3. **Wrap-up** — after the commit turn ends the state resets without another interaction; the result is visible in the transcript.
 
-commit 由模型经 bash 执行，插件只负责编排（发提示词 / 交互 / followup），不解析消息、不执行 git。
-因此需要部署允许模型调用 bash 工具并具备 git 写权限。
+The commit is executed by the model via bash; the plugin only orchestrates (prompts / interaction / followup) and never parses messages or runs git itself. The deployment must therefore allow the model to call the bash tool and have git write permission.
 
-### 非交互技能 `git-commit-zh`
+### Non-interactive skill `git-commit-zh`
 
-插件同时注册一个模型可调用的技能（名称与命令 `gen-commit-msg-zh` 刻意不同）：
-在**非用户交互**场景（自主执行、无 UI / 无头部署、子代理、脚本化流程）下，模型可加载该技能，
-直接为当前 git 改动生成推荐的中文 commit message 并提交，**无需用户确认**。
-技能对模型与用户均开放（`modelInvocable: true, userInvocable: true`），且只在宿主已挂载
-`skills` 服务时注册（`ctx.inject`，缺失自动跳过）。
+The plugin also registers a model-callable skill (its name deliberately differs from the command `gen-commit-msg-zh`): in **non-user-interactive** scenarios (autonomous execution, UI-less / headless deployments, subagents, scripted flows), the model can load this skill to generate a recommended Chinese commit message for the current git changes and commit directly, **without user confirmation**. The skill is open to both model and user invocation (`modelInvocable: true, userInvocable: true`) and is registered only when the host mounts the `skills` service (`ctx.inject`, skipped when absent).
 
-## 命令与技能
+## Commands & Skills
 
-| 名称 | 类型 | 说明 |
+| Name | Type | Description |
 |---|---|---|
-| `/gen-commit-msg-zh` | 命令 | 生成中文 commit message 并交互提交（需用户三选确认） |
-| `git-commit-zh` | 技能 | 非交互直接提交当前改动（按推荐消息，无需用户确认） |
+| `/gen-commit-msg-zh` | command | Generate a Chinese commit message and commit interactively (requires the user's three-choice confirmation) |
+| `git-commit-zh` | skill | Non-interactive direct commit of the current changes (recommended message, no user confirmation) |
 
 ## Config
 
-无（该插件不接受配置）。
+None (the plugin accepts no configuration).
 
-## 模型可见文本
+## Model-visible text
 
-以下提示词是稳定契约，**源文件**为包内 `prompts/generate.md`、`prompts/commit.md` 与
-`prompts/skill-commit.md`（运行时由 `src/prompts.ts` 读取，缺失时回退到极简 fallback）。
-改动提示词时需同步更新本 README 与测试。
+The prompts below are a stable contract. **Source files** are `prompts/generate.md`, `prompts/commit.md` and `prompts/skill-commit.md` in the package (read at runtime by `src/prompts.ts`, falling back to a minimal prompt when missing). When changing a prompt, update this README and the tests in the same commit.
 
-### 生成轮提示词（`prompts/generate.md` → `GENERATE_PROMPT`）
+### Generation prompt (`prompts/generate.md` → `GENERATE_PROMPT`)
 
 ```
 ## Your task
@@ -156,7 +144,7 @@ Avoid
 | perf     | Performance improvements              |
 ```
 
-有附加要求时，在模板后追加：
+When an extra prompt is supplied, it is appended after the template:
 
 ```
 ### 用户附加要求
@@ -164,7 +152,7 @@ Avoid
 <附加要求原文>
 ```
 
-### 提交轮提示词（`prompts/commit.md` → `COMMIT_PROMPT`）
+### Commit prompt (`prompts/commit.md` → `COMMIT_PROMPT`)
 
 ```
 用户已选择提交。请先运行 `git status`（或 `git diff --staged --stat`）判断是否已有暂存改动:
@@ -173,7 +161,7 @@ Avoid
 用你上面生成的 commit message 执行 `git commit`; sandbox 环境用多个 `-m`（首个为标题, 其余为正文）, 不要加任何广告尾注。
 ```
 
-### 非交互提交技能正文（`prompts/skill-commit.md` → `GIT_COMMIT_SKILL`）
+### Non-interactive commit skill body (`prompts/skill-commit.md` → `GIT_COMMIT_SKILL`)
 
 ```
 ## Task
@@ -248,18 +236,15 @@ Avoid
 
 ## Behavior
 
-- 阶段状态机（`idle` / `generate` / `commit`）按会话 id 保存在**进程内**：`generate` 回合结束后弹三选；
-  `commit` 回合结束后仅复位；`idle` 不干预普通对话。同一生成回合只弹一次三选（防抖）。
-- 对话框被取消、agent 已失效、或部署无 `userQuestions` provider 时，流程安全回到 `idle`，不做任何提交。
-- 插件消息以 `form: 'notice'` 形态写入转录（单行摘要），完整提示词作为消息正文。
-- `git-commit-zh` 技能仅在宿主挂载 `skills` 服务时注册（`ctx.inject`），对模型与用户均开放
-  （`modelInvocable: true, userInvocable: true`）；技能正文来自 `prompts/skill-commit.md`。
+- The phase state machine (`idle` / `generate` / `commit`) is kept **in-process**, keyed by session id: `generate` turns end with the three-choice dialog; `commit` turns just reset; `idle` leaves ordinary conversations alone. A single generation turn shows the dialog at most once (debounced).
+- When a dialog is cancelled, the agent is no longer live, or the deployment has no `userQuestions` provider, the flow safely returns to `idle` without committing.
+- Plugin messages are written to the transcript as `form: 'notice'` (one-line summary) with the full prompt as the message body.
+- The `git-commit-zh` skill is registered only when the host mounts the `skills` service (`ctx.inject`), open to both model and user (`modelInvocable: true, userInvocable: true`); its body comes from `prompts/skill-commit.md`.
 
 ## Known Limitations and Deferred Work
 
-- **阶段状态不跨进程持久化**：DSH 主机插件与进程同生命周期，阶段存于内存；完整重启后复位为
-  `idle`。若在生成回合与三选之间重启，重跑一次 `/gen-commit-msg-zh` 即可。
-- **交互菜单需要 UI 部署**：`userQuestions` 为可选服务，无 provider 时命令只触发生成轮、不弹菜单。
-- **技能需要 `skills` 服务**：宿主未挂载 `dsh-skill` 时 `git-commit-zh` 不注册（命令不受影响）。
-- **依赖模型与 bash 工具**：提交由模型执行，需要部署允许 bash 且具备 git 写权限。
-- 未迁移 Pi 版的 `ctx.ui.notify` 通知（DSH 无对等 API）；进度通过命令结果文本与转录呈现。
+- **Phase state does not survive process restarts**: DSH host plugins live for the process lifetime, and the phase lives in memory; a full restart resets to `idle`. If the process restarts between the generation turn and the dialog, just run `/gen-commit-msg-zh` again.
+- **Interactive menus need a UI deployment**: `userQuestions` is an optional service; without a provider the command only fires the generation turn and shows no menu.
+- **The skill needs the `skills` service**: without `dsh-skill` mounted, `git-commit-zh` is not registered (the command is unaffected).
+- **Depends on the model and the bash tool**: commits are executed by the model; the deployment must allow bash and have git write permission.
+- Pi's `ctx.ui.notify` notifications were not migrated (DSH has no equivalent API); progress is shown via command result text and the transcript.

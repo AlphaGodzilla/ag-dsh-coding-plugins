@@ -1,10 +1,22 @@
+[中文](README.md) | [English](README.en.md)
+
 # ag-dsh-coding-plugins
 
 围绕软件工程开发的 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)（DSH）插件合集。本仓库是 pnpm monorepo：`packages/` 下每个目录都是一个独立、可发布的 TypeScript 插件包；外层负责 workspace 组合与 CI/CD。
 
 开发约定与智能体操作守则见 [AGENTS.md](AGENTS.md)。
 
-## 仓库结构
+## 插件列表
+
+> 每新增一个插件，请同步更新本表。
+
+| 插件 | npm 包 | 版本 | 文档 | 说明 |
+|---|---|---|---|---|
+| gen-commit-msg-zh | `@ag-dsh/dsh-gen-commit-msg-zh` | 0.1.0 | [README](packages/gen-commit-msg-zh/README.md) | 生成中文 git commit message 并交互提交：命令 `/gen-commit-msg-zh`（只读探查 → 生成 → 三选：提交 / 调整消息 / 放弃）+ 技能 `git-commit-zh`（非交互场景直接提交，无需用户确认） |
+
+## 开发
+
+### 仓库结构
 
 ```
 .
@@ -31,7 +43,7 @@
 └── .oxlintrc.json               # lint 配置
 ```
 
-## 快速开始
+### 快速开始
 
 ```sh
 pnpm install        # 安装依赖（pnpm >= 10）
@@ -39,7 +51,7 @@ pnpm check:ci       # 全部门禁：typecheck → lint → test → build → w
 pnpm new my-tool    # 生成一个新插件包（或参考 packages/gen-commit-msg-zh 手写）
 ```
 
-## 工具链
+### 工具链
 
 | 环节 | 工具 | 命令 |
 |---|---|---|
@@ -54,7 +66,7 @@ pnpm new my-tool    # 生成一个新插件包（或参考 packages/gen-commit-m
 
 一个插件包的构成约定：`src/index.ts`（named-export `name`/`inject`/`Config`/`apply`，`Config` 为 schemastery schema）、`tests/`（vitest）、`README.md`（配置表 + 行为 + Known Limitations）。`pnpm check-workspace` 强制这些结构。
 
-## 发布流程
+### 发布流程
 
 1. 改动插件包时运行 `pnpm changeset` 记录变更（patch/minor/major）。
 2. 合并 PR 后，`release.yml` 自动打开/更新 "Version Packages" 版本 PR。

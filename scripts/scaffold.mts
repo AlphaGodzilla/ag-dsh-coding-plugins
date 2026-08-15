@@ -130,7 +130,46 @@ describe('${npmName}', () => {
 })
 `
 
-const readme = `# ${npmName}
+const readme = `[中文](README.md) | [English](README.en.md)
+
+# ${npmName}
+
+${summary}
+
+## Installation
+
+在 DSH profile 目录中：
+
+\`\`\`sh
+dsh plugin --profile <name> add ${npmName}
+\`\`\`
+
+或写入 profile 的 \`cordis.yml\` / \`cordis.patch.yml\`：
+
+\`\`\`yaml
+- name: '${npmName}'
+  config:
+    message: hello
+\`\`\`
+
+## Config
+
+| 键 | 类型 | 默认值 | 说明 |
+|---|---|---|---|
+| \`message\` | \`string\` | \`hello from ${nameArg}\` | 挂载时打印的消息。 |
+
+## Behavior
+
+挂载时通过 Cordis logger（名为 \`${nameArg}\`）打印配置的消息；卸载时打印 \`goodbye\`。两者均通过 \`ctx.effect\` 注册，随插件 fiber 干净释放。
+
+## Known Limitations and Deferred Work
+
+- 无。
+`
+
+const readmeEn = `[中文](README.md) | [English](README.en.md)
+
+# ${npmName}
 
 ${summary}
 
@@ -180,6 +219,7 @@ const files: Record<string, string> = {
   'src/index.ts': srcIndex,
   'tests/index.spec.ts': testsSpec,
   'README.md': readme,
+  'README.en.md': readmeEn,
 }
 
 for (const [file, content] of Object.entries(files)) {
