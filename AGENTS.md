@@ -55,7 +55,7 @@ DSH（DeepSeek Harness）插件合集 monorepo。每个插件是一个独立、�
 
 1. 顶部语言跳转链接
 2. `# <npm 包名>` + 一句话简介（功能 + 来源/背景）
-3. `## Installation`：`dsh plugin` 命令 + `cordis.yml` 行 + **依赖的宿主服务表**（服务 / 依赖方式：inject 硬依赖、`ctx.get`/`ctx.inject` 可选 / 说明）
+3. `## Installation`：`dsh plugin` 命令 + **安装/更新后需重启 dsh 的提示与示例命令（以 web profile 为例）** + `cordis.yml` 行 + **依赖的宿主服务表**（服务 / 依赖方式：inject 硬依赖、`ctx.get`/`ctx.inject` 可选 / 说明）
 4. `## Usage`：命令用法与交互流程；技能等模型面入口逐个说明
 5. 命令与技能一览表（名称 / 类型 / 说明）
 6. `## Config`：schemastery 配置表（键 / 类型 / 默认值 / 说明）；无配置写"无"

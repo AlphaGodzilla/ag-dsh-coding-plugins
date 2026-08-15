@@ -6,15 +6,23 @@ DSH plugin: generate a Chinese git commit message and commit interactively. Migr
 
 ## Installation
 
-Since v1.1.0 the package ships an official `dsh.bundle` manifest (`dsh.bundle.patch` → `cordis.patch.yml`), so `dsh plugin add` registers it as a profile layer (appended to `dsh.profile.bundles`) and it loads on the next start:
+Since v1.1.0 the package ships an official `dsh.bundle` manifest (`dsh.bundle.patch` → `cordis.patch.yml`), so `dsh plugin add` registers it as a profile layer (appended to `dsh.profile.bundles`). Using the most common web profile as an example:
 
 ```sh
-dsh plugin --profile <name> add @ag-dsh/dsh-gen-commit-msg-zh
+# Install (fresh install, or upgrade an older version with update)
+dsh plugin --profile web add @ag-dsh/dsh-gen-commit-msg-zh
+dsh plugin --profile web update @ag-dsh/dsh-gen-commit-msg-zh
+
+# ⚠️ You must restart dsh after install/update for the plugin to load:
+# exit the current dsh process first, then start it again
+dsh --profile web
 ```
+
+> Why a restart is required: `dsh plugin add` only installs the package and registers it in `dsh.profile.bundles` (the profile's `package.json`). The running process composes its configuration tree once **at startup**, and hot reload only watches `cordis.patch.yml` — not the bundles list — so the new layer takes effect on the next start.
 
 > The `missing peer @deepseek-ai/...` warnings at install time can be ignored: profiles default to `autoInstallPeers: false`, and these peers are provided at runtime by the dsh installation's module closure (`$DSH_HOME/profiles/node_modules`).
 
-Alternatively, skip the bundle mechanism and add the plugin row directly to the profile's `cordis.yml` / `cordis.patch.yml`:
+Alternatively, skip the bundle mechanism and add the plugin row directly to the profile's `cordis.yml` / `cordis.patch.yml` (this path is hot-applied by HMR, **no restart needed**):
 
 ```yaml
 - id: gen-commit-msg-zh

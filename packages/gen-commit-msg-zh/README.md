@@ -8,17 +8,28 @@ DSH 插件: 生成中文 git commit message 并交互提交。迁移自 Pi Codin
 ## Installation
 
 包自 1.1.0 起携带官方 `dsh.bundle` 清单（`dsh.bundle.patch` → `cordis.patch.yml`），
-`dsh plugin add` 会把它注册为 profile 配置层（追加进 `dsh.profile.bundles`），下次启动时自动加载：
+`dsh plugin add` 会把它注册为 profile 配置层（追加进 `dsh.profile.bundles`）。
+以最常用的 web profile 为例：
 
 ```sh
-dsh plugin --profile <name> add @ag-dsh/dsh-gen-commit-msg-zh
+# 安装（新装，或已装旧版时用 update 升级）
+dsh plugin --profile web add @ag-dsh/dsh-gen-commit-msg-zh
+dsh plugin --profile web update @ag-dsh/dsh-gen-commit-msg-zh
+
+# ⚠️ 安装/更新后必须重启 dsh 才会加载：先退出当前 dsh 进程，再重新启动
+dsh --profile web
 ```
+
+> 为什么需要重启：`dsh plugin add` 只负责安装包并把它登记进 `dsh.profile.bundles`
+> （profile 的 `package.json`）。运行中的进程在**启动时**才一次性组合配置树，且热更新
+> 只监视 `cordis.patch.yml`、不监视 bundles 列表，所以新层要等下次启动才生效。
 
 > 安装时出现的 `missing peer @deepseek-ai/...` 警告可忽略：profile 默认
 > `autoInstallPeers: false`，这些 peer 由 dsh 安装自身的模块闭包
 > （`$DSH_HOME/profiles/node_modules`）在运行时提供。
 
-也可以不经过 bundle 机制，直接把插件行写入 profile 的 `cordis.yml` / `cordis.patch.yml`：
+也可以不经过 bundle 机制，直接把插件行写入 profile 的 `cordis.yml` / `cordis.patch.yml`
+（此方式由 HMR 热应用，**无需重启**）：
 
 ```yaml
 - id: gen-commit-msg-zh

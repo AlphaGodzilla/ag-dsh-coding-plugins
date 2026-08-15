@@ -144,13 +144,22 @@ ${summary}
 
 ## Installation
 
-在 DSH profile 目录中：
+以最常用的 web profile 为例：
 
 \`\`\`sh
-dsh plugin --profile <name> add ${npmName}
+# 安装
+dsh plugin --profile web add ${npmName}
+
+# ⚠️ 安装后必须重启 dsh 才会加载：先退出当前 dsh 进程，再重新启动
+dsh --profile web
 \`\`\`
 
-或写入 profile 的 \`cordis.yml\` / \`cordis.patch.yml\`：
+> \`dsh plugin add\` 只负责安装并登记进 \`dsh.profile.bundles\`（profile 的
+> \`package.json\`）；运行中的进程在启动时才组合配置树，热更新不监视 bundles
+> 列表，因此需要重启才生效。
+
+也可以不经过 bundle 机制，直接把插件行写入 profile 的 \`cordis.yml\` / \`cordis.patch.yml\`
+（HMR 热应用，无需重启）：
 
 \`\`\`yaml
 - id: ${nameArg}
@@ -182,13 +191,22 @@ ${summary}
 
 ## Installation
 
-In a DSH profile directory:
+Using the most common web profile as an example:
 
 \`\`\`sh
-dsh plugin --profile <name> add ${npmName}
+# Install
+dsh plugin --profile web add ${npmName}
+
+# ⚠️ You must restart dsh after install for the plugin to load:
+# exit the current dsh process first, then start it again
+dsh --profile web
 \`\`\`
 
-or add to the profile's \`cordis.yml\` / \`cordis.patch.yml\`:
+> \`dsh plugin add\` only installs the package and registers it in \`dsh.profile.bundles\`
+> (the profile's \`package.json\`); the running process composes its configuration tree
+> at startup and hot reload does not watch the bundles list, so a restart is required.
+
+Alternatively, skip the bundle mechanism and add the plugin row directly to the profile's \`cordis.yml\` / \`cordis.patch.yml\` (hot-applied by HMR, no restart needed):
 
 \`\`\`yaml
 - id: ${nameArg}
