@@ -28,6 +28,7 @@ DSH（DeepSeek Harness）插件合集 monorepo。每个插件是一个独立、�
 11. **类型**：`tsconfig.base.json` 严格模式（`strict`、`noUncheckedIndexedAccess`、`exactOptionalPropertyTypes` 等）；`moduleResolution: bundler`；相对导入必须带 `.ts` 扩展名；`tests/` 不参与 `tsc -b`（由 vitest 执行 + oxlint 把关）。
 12. **依赖**：只加在包的 `package.json`，版本用 `catalog:` 协议（集中在 `pnpm-workspace.yaml` 的 `catalog`）；不向根 `package.json` 添加运行时依赖；包间依赖用 `workspace:` 协议。
 13. **Cordis 参考**：API 以 `@deepseek-ai/cordis`（`Context` / `Service` / `Logger`）为准；形状与生命周期看 deepseek-harness 的 `docs/cordis-tutorial/`；文档层级规则看其 `docs/AGENTS.md`。
+14. **官方 bundle 契约**：每个发布包必须在 `package.json` 声明 `dsh.bundle.patch`（指向包根 `cordis.patch.yml`），并把 `cordis.patch.yml` 加入 `files` 与 `exports`——否则 `dsh plugin add` 只会把它装成普通依赖、不会注册为 profile 层。bundle patch 用 `- insert:` 以**裸包名**插入插件行（`name: '<npm名>'`）；相对路径会相对 profile 根解析，不可用。安装时的 `missing peer @deepseek-ai/...` 警告可忽略：profile 默认 `autoInstallPeers: false`，运行时由 dsh 安装的模块闭包 `$DSH_HOME/profiles/node_modules` 提供（`check-workspace` 强制本契约）。
 
 ## README 文档规范
 

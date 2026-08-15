@@ -1,0 +1,10 @@
+# @ag-dsh/dsh-gen-commit-msg-zh bundle patch — one profile layer, applied
+# after the in-box bundles (dsh-base, dsh-web-app) and before the profile's
+# own cordis.patch.yml. A top-level YAML array of loader patch entries
+# (PatchOptions). This patch inserts the plugin row into the profile entry
+# tree; the bare package name resolves through the profile's node_modules,
+# and the @deepseek-ai/* peer imports are provided by the dsh installation's
+# module closure (symlinked under $DSH_HOME/profiles/node_modules).
+- insert:
+    - id: gen-commit-msg-zh
+      name: '@ag-dsh/dsh-gen-commit-msg-zh'

@@ -61,9 +61,15 @@ const packageJson = {
   types: 'lib/index.d.ts',
   exports: {
     '.': { types: './lib/index.d.ts', default: './lib/index.js' },
+    './cordis.patch.yml': './cordis.patch.yml',
     './package.json': './package.json',
   },
-  files: ['lib'],
+  dsh: {
+    bundle: {
+      patch: './cordis.patch.yml',
+    },
+  },
+  files: ['lib', 'cordis.patch.yml'],
   license: 'MIT',
   engines: { node: config.node },
   scripts: {
@@ -147,7 +153,8 @@ dsh plugin --profile <name> add ${npmName}
 或写入 profile 的 \`cordis.yml\` / \`cordis.patch.yml\`：
 
 \`\`\`yaml
-- name: '${npmName}'
+- id: ${nameArg}
+  name: '${npmName}'
   config:
     message: hello
 \`\`\`
@@ -184,7 +191,8 @@ dsh plugin --profile <name> add ${npmName}
 or add to the profile's \`cordis.yml\` / \`cordis.patch.yml\`:
 
 \`\`\`yaml
-- name: '${npmName}'
+- id: ${nameArg}
+  name: '${npmName}'
   config:
     message: hello
 \`\`\`
@@ -204,6 +212,18 @@ On mount, logs the configured message through the Cordis logger under the \`${na
 - None.
 `
 
+const bundlePatch = `# ${npmName} bundle patch — one profile layer, applied after the in-box
+# bundles and before the profile's own cordis.patch.yml. A top-level YAML
+# array of loader patch entries (PatchOptions). This patch inserts the plugin
+# row into the profile entry tree; the bare package name resolves through the
+# profile's node_modules, and the @deepseek-ai/* peer imports are provided by
+# the dsh installation's module closure (symlinked under
+# $DSH_HOME/profiles/node_modules).
+- insert:
+    - id: ${nameArg}
+      name: '${npmName}'
+`
+
 const tsconfigJson = {
   extends: '../../tsconfig.base.json',
   compilerOptions: {
@@ -215,6 +235,7 @@ const tsconfigJson = {
 
 const files: Record<string, string> = {
   'package.json': `${JSON.stringify(packageJson, null, 2)}\n`,
+  'cordis.patch.yml': bundlePatch,
   'tsconfig.json': `${JSON.stringify(tsconfigJson, null, 2)}\n`,
   'src/index.ts': srcIndex,
   'tests/index.spec.ts': testsSpec,

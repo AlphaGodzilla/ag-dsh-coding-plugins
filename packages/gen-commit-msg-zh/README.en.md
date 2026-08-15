@@ -6,16 +6,19 @@ DSH plugin: generate a Chinese git commit message and commit interactively. Migr
 
 ## Installation
 
-In a DSH profile directory:
+Since v1.1.0 the package ships an official `dsh.bundle` manifest (`dsh.bundle.patch` → `cordis.patch.yml`), so `dsh plugin add` registers it as a profile layer (appended to `dsh.profile.bundles`) and it loads on the next start:
 
 ```sh
 dsh plugin --profile <name> add @ag-dsh/dsh-gen-commit-msg-zh
 ```
 
-or add to the profile's `cordis.yml` / `cordis.patch.yml`:
+> The `missing peer @deepseek-ai/...` warnings at install time can be ignored: profiles default to `autoInstallPeers: false`, and these peers are provided at runtime by the dsh installation's module closure (`$DSH_HOME/profiles/node_modules`).
+
+Alternatively, skip the bundle mechanism and add the plugin row directly to the profile's `cordis.yml` / `cordis.patch.yml`:
 
 ```yaml
-- name: '@ag-dsh/dsh-gen-commit-msg-zh'
+- id: gen-commit-msg-zh
+  name: '@ag-dsh/dsh-gen-commit-msg-zh'
 ```
 
 Host services required:

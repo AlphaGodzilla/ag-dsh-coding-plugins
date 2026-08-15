@@ -28,11 +28,18 @@
       "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
+    "./cordis.patch.yml": "./cordis.patch.yml",
     "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
   },
   "files": [
     "lib",
-    "prompts"
+    "prompts",
+    "cordis.patch.yml"
   ],
   "license": "MIT",
   "engines": {

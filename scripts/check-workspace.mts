@@ -29,6 +29,7 @@ interface Pkg {
   engines?: { node?: unknown }
   scripts?: { build?: unknown }
   repository?: { url?: unknown; directory?: unknown }
+  dsh?: { bundle?: { patch?: unknown } }
 }
 
 const root = process.cwd()
@@ -89,6 +90,14 @@ for (const dir of packageDirs) {
     `packages/${dir}: exports["."] must map types→./lib/index.d.ts and default→./lib/index.js`,
   )
   check(Array.isArray(pkg.files) && pkg.files.includes('lib'), `packages/${dir}: "files" must include "lib"`)
+  check(
+    typeof pkg.dsh?.bundle?.patch === 'string' && pkg.dsh.bundle.patch.length > 0,
+    `packages/${dir}: "dsh.bundle.patch" must point to the profile patch file so "dsh plugin add" registers it as a layer`,
+  )
+  check(
+    existsSync(join(pkgDir, 'cordis.patch.yml')),
+    `packages/${dir}: cordis.patch.yml (the bundle patch declared by dsh.bundle.patch) is missing`,
+  )
   check(pkg.license === 'MIT', `packages/${dir}: "license" must be "MIT"`)
   check(pkg.publishConfig?.access === 'public', `packages/${dir}: publishConfig.access must be "public"`)
   check(pkg.engines?.node === config.node, `packages/${dir}: engines.node must be "${config.node}"`)

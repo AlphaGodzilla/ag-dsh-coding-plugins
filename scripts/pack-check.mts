@@ -11,7 +11,7 @@ import { join } from 'node:path'
 const root = process.cwd()
 const packagesDir = join(root, 'packages')
 const errors: string[] = []
-const requiredEntries = ['package.json', 'README.md', 'README.en.md', 'lib/index.js', 'lib/index.d.ts']
+const requiredEntries = ['package.json', 'README.md', 'README.en.md', 'cordis.patch.yml', 'lib/index.js', 'lib/index.d.ts']
 let checked = 0
 
 for (const dir of readdirSync(packagesDir, { withFileTypes: true })

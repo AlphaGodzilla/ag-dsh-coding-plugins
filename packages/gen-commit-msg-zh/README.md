@@ -7,16 +7,22 @@ DSH 插件: 生成中文 git commit message 并交互提交。迁移自 Pi Codin
 
 ## Installation
 
-在 DSH profile 目录中：
+包自 1.1.0 起携带官方 `dsh.bundle` 清单（`dsh.bundle.patch` → `cordis.patch.yml`），
+`dsh plugin add` 会把它注册为 profile 配置层（追加进 `dsh.profile.bundles`），下次启动时自动加载：
 
 ```sh
 dsh plugin --profile <name> add @ag-dsh/dsh-gen-commit-msg-zh
 ```
 
-或写入 profile 的 `cordis.yml` / `cordis.patch.yml`：
+> 安装时出现的 `missing peer @deepseek-ai/...` 警告可忽略：profile 默认
+> `autoInstallPeers: false`，这些 peer 由 dsh 安装自身的模块闭包
+> （`$DSH_HOME/profiles/node_modules`）在运行时提供。
+
+也可以不经过 bundle 机制，直接把插件行写入 profile 的 `cordis.yml` / `cordis.patch.yml`：
 
 ```yaml
-- name: '@ag-dsh/dsh-gen-commit-msg-zh'
+- id: gen-commit-msg-zh
+  name: '@ag-dsh/dsh-gen-commit-msg-zh'
 ```
 
 依赖的宿主服务：
