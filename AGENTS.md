@@ -45,7 +45,7 @@ DSH（DeepSeek Harness）插件合集 monorepo。每个插件是一个独立、�
 
 1. 顶部语言跳转链接
 2. `# ag-dsh-coding-plugins` + 仓库简介 + 指向 [AGENTS.md](AGENTS.md) 的开发约定入口
-3. `## 插件列表`：表格列出每个插件（插件名 / npm 包 / 版本 / 说明）。**插件名列本身即 README 链接**（中文版链 `packages/<name>/README.md`，英文版链 `packages/<name>/README.en.md`）。**每新增一个插件必须同步更新本表**
+3. `## 插件列表`：表格列出每个插件（插件名 / npm 包 / 说明）。**插件名列本身即 README 链接**（中文版链 `packages/<name>/README.md`，英文版链 `packages/<name>/README.en.md`）。**每新增一个插件必须同步更新本表**
 4. `## 开发`（仓库结构 / 快速开始 / 工具链 / 发布流程）
 5. `## 相关链接`、`## License`
 

@@ -15,10 +15,10 @@ https://github.com/user-attachments/assets/5bc60971-48f8-41a4-ad98-53e3a1b6d67f
 
 > 每新增一个插件，请同步更新本表。
 
-| 插件 | npm 包 | 版本 | 说明 |
-|---|---|---|---|
-| [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | 生成中文 commit message 并交互提交（命令 + 非交互技能） |
-| [web-notify](packages/web-notify/README.md) | `@ag-dsh/dsh-web-notify` | 0.1.0 | 浏览器系统通知：对话完成/待回答/需授权/出错时提醒（Chrome/Edge/Firefox/Safari） |
+| 插件 | npm 包 | 说明 |
+|---|---|---|
+| [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 生成中文 commit message 并交互提交（命令 + 非交互技能） |
+| [web-notify](packages/web-notify/README.md) | `@ag-dsh/dsh-web-notify` | 浏览器系统通知：对话完成/待回答/需授权/出错时提醒（Chrome/Edge/Firefox/Safari） |
 
 
 

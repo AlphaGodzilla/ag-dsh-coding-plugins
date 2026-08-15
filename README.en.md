@@ -15,10 +15,10 @@ https://github.com/user-attachments/assets/5bc60971-48f8-41a4-ad98-53e3a1b6d67f
 
 > Keep this table in sync when adding a plugin.
 
-| Plugin | npm package | Version | Description |
-|---|---|---|---|
-| [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.en.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | Generate a Chinese commit message and commit interactively (slash command + non-interactive skill) |
-| [web-notify](packages/web-notify/README.en.md) | `@ag-dsh/dsh-web-notify` | 0.1.0 | Browser system notifications for turn completion / pending questions / approvals / errors (Chrome/Edge/Firefox/Safari) |
+| Plugin | npm package | Description |
+|---|---|---|
+| [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.en.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | Generate a Chinese commit message and commit interactively (slash command + non-interactive skill) |
+| [web-notify](packages/web-notify/README.en.md) | `@ag-dsh/dsh-web-notify` | Browser system notifications for turn completion / pending questions / approvals / errors (Chrome/Edge/Firefox/Safari) |
 
 ## Development
 
