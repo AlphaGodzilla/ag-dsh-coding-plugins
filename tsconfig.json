@@ -3,6 +3,9 @@
   "references": [
     {
       "path": "./packages/gen-commit-msg-zh"
+    },
+    {
+      "path": "./packages/web-notify"
     }
   ]
 }

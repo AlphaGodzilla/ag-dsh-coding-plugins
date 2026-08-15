@@ -13,6 +13,7 @@ Development conventions and agent operating rules: see [AGENTS.md](AGENTS.md).
 | Plugin | npm package | Version | Description |
 |---|---|---|---|
 | [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.en.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | Generate a Chinese commit message and commit interactively (slash command + non-interactive skill) |
+| [web-notify](packages/web-notify/README.en.md) | `@ag-dsh/dsh-web-notify` | 0.1.0 | Browser system notifications for turn completion / pending questions / approvals / errors (Chrome/Edge/Firefox/Safari) |
 
 ## Development
 
@@ -71,6 +72,7 @@ A plugin package follows this structure: `src/index.ts` (named-export `name`/`in
 1. When changing a plugin package, run `pnpm changeset` to record the change (patch/minor/major).
 2. After merging the PR, `release.yml` automatically opens/updates the "Version Packages" PR.
 3. After merging the version PR, changed packages are built and published to npm automatically (`@ag-dsh/dsh-*`, scope in `dsh-workspace.json`).
+4. After publishing, `release.yml` tags every package at the release commit as `<dir>/v<version>` (e.g. `web-notify/v1.0.0`). The changesets default `<pkgName>@<version>` tags are disabled in `.changeset/config.json` (`gitTag: false`); tagging is fully owned by this workflow and idempotent (existing tags are skipped).
 
 ## Related Links
 

@@ -13,6 +13,7 @@
 | 插件 | npm 包 | 版本 | 说明 |
 |---|---|---|---|
 | [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | 生成中文 commit message 并交互提交（命令 + 非交互技能） |
+| [web-notify](packages/web-notify/README.md) | `@ag-dsh/dsh-web-notify` | 0.1.0 | 浏览器系统通知：对话完成/待回答/需授权/出错时提醒（Chrome/Edge/Firefox/Safari） |
 
 ## 开发
 
@@ -71,6 +72,7 @@ pnpm new my-tool    # 生成一个新插件包（或参考 packages/gen-commit-m
 1. 改动插件包时运行 `pnpm changeset` 记录变更（patch/minor/major）。
 2. 合并 PR 后，`release.yml` 自动打开/更新 "Version Packages" 版本 PR。
 3. 合并版本 PR 后，自动构建并发布变更包到 npm（`@ag-dsh/dsh-*`，scope 见 `dsh-workspace.json`）。
+4. 发布成功后，`release.yml` 在本次发布提交上为每个包打 git tag，格式为 `<目录名>/v<版本>`（如 `web-notify/v1.0.0`）。changesets 默认的 `<包名>@<版本>` tag 已在 `.changeset/config.json` 中关闭（`gitTag: false`），tag 完全由此工作流控制，幂等（已存在的 tag 跳过）。
 
 ## 相关链接
 

@@ -42,3 +42,23 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Tag every package at the release commit as "<dir>/v<version>"
+      # (e.g. web-notify/v1.0.0). The changesets default git tags are disabled
+      # in .changeset/config.json (gitTag: false) so tagging stays under this
+      # step's control with a consistent format. Idempotent: existing tags are
+      # skipped, so re-running the workflow never duplicates or moves a tag.
+      - name: Tag released packages
+        run: |
+          for pkg in packages/*/package.json; do
+            dir=$(basename "$(dirname "$pkg")")
+            version=$(node -p "require('./$pkg').version")
+            tag="$dir/v$version"
+            if git rev-parse -q --verify "refs/tags/$tag" >/dev/null 2>&1; then
+              echo "skip (exists): $tag"
+            else
+              git tag "$tag"
+              echo "created: $tag"
+            fi
+          done
+          git push origin --tags

@@ -24,3 +24,6 @@ catalog:
   '@deepseek-ai/dsh-user-questions': ^0.1.0-rc.6
   '@changesets/cli': ^3.0.0
   '@changesets/changelog-git': ^1.0.0
+  esbuild: ^0.28.2
+  react: ^18.3.1
+  '@types/react': ^18.3.12
