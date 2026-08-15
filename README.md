@@ -6,6 +6,9 @@
 
 开发约定与智能体操作守则见 [AGENTS.md](AGENTS.md)。
 
+## 插件演示
+https://github.com/user-attachments/assets/34af50d9-f270-4170-b6db-d4290d524b89
+
 ## 插件列表
 
 > 每新增一个插件，请同步更新本表。
@@ -14,6 +17,8 @@
 |---|---|---|---|
 | [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | 生成中文 commit message 并交互提交（命令 + 非交互技能） |
 | [web-notify](packages/web-notify/README.md) | `@ag-dsh/dsh-web-notify` | 0.1.0 | 浏览器系统通知：对话完成/待回答/需授权/出错时提醒（Chrome/Edge/Firefox/Safari） |
+
+
 
 ## 开发
 
