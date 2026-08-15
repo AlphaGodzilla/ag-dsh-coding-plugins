@@ -10,9 +10,9 @@ Development conventions and agent operating rules: see [AGENTS.md](AGENTS.md).
 
 > Keep this table in sync when adding a plugin.
 
-| Plugin | npm package | Version | Docs | Description |
-|---|---|---|---|---|
-| gen-commit-msg-zh | `@ag-dsh/dsh-gen-commit-msg-zh` | 0.1.0 | [README](packages/gen-commit-msg-zh/README.en.md) | Generate a Chinese git commit message and commit interactively: the `/gen-commit-msg-zh` command (read-only git inspection → generate → three choices: commit / adjust message / abandon) plus the `git-commit-zh` skill (non-interactive direct commit, no user confirmation) |
+| Plugin | npm package | Version | Description |
+|---|---|---|---|
+| [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.en.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | Generate a Chinese commit message and commit interactively (slash command + non-interactive skill) |
 
 ## Development
 

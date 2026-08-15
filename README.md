@@ -10,9 +10,9 @@
 
 > 每新增一个插件，请同步更新本表。
 
-| 插件 | npm 包 | 版本 | 文档 | 说明 |
-|---|---|---|---|---|
-| gen-commit-msg-zh | `@ag-dsh/dsh-gen-commit-msg-zh` | 0.1.0 | [README](packages/gen-commit-msg-zh/README.md) | 生成中文 git commit message 并交互提交：命令 `/gen-commit-msg-zh`（只读探查 → 生成 → 三选：提交 / 调整消息 / 放弃）+ 技能 `git-commit-zh`（非交互场景直接提交，无需用户确认） |
+| 插件 | npm 包 | 版本 | 说明 |
+|---|---|---|---|
+| [gen-commit-msg-zh](packages/gen-commit-msg-zh/README.md) | `@ag-dsh/dsh-gen-commit-msg-zh` | 1.0.0 | 生成中文 commit message 并交互提交（命令 + 非交互技能） |
 
 ## 开发
 
